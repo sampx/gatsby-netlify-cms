@@ -1,17 +1,30 @@
+# backend选项指定如何访问站点的内容，包括身份验证。
 backend:
   name: git-gateway
   branch: master
+# publish_mode选项允许您启用“编辑工作流”模式，以便更好地控制内容发布流程。所有未发布的条目将根据其状态显示在面板上，供上线之前进一步审查和编辑。（目前只支持github）
 publish_mode: editorial_workflow
+# 媒体上传文件夹
 media_folder: static/img
 public_folder: /img
 
 collections:
+  # Post类型，集合的唯一标识符，在其他上下文中引用时用作键。
   - name: "blog"
+    # Admin UI中显示的Post种类
     label: "Blog"
+    # 存储此类型文件的位置，相对于repo根目录。
     folder: "src/pages/blog"
+    # 是否允许用户创建内容
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
+    # 文件名格式，如：YYYY-MM-DD-title.md
+    slug: "{{year}}-{{month}}-{{day}}_{{slug}}"
+    # 此处列出的字段在内容编辑器中显示为字段，然后在文档的开头保存为front matter,每个字段包含以下属性：
+    # label:编辑器UI中的字段标签
+    # name:文档中front matter的字段名称
+    # widget:确定UI样式和值数据类型
+    # default:设置字段的默认值（可选）。
+    fields:      
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "blog-post"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
